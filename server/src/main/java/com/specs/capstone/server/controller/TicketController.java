@@ -23,12 +23,12 @@ public class TicketController {
     @PostMapping("/add")
     public String add(@RequestBody Ticket ticket){
         ticketService.saveTicket(ticket);
-        return "new Student is Added";
+        return "new ticket is Added";
     }
 
     @GetMapping("/getAll")
     public List<Ticket> list(){
-        System.out.println(ticketService.getAllTickets() + "jelo");
+        System.out.println(ticketService.getAllTickets() );
         return ticketService.getAllTickets();
     }
 
@@ -45,7 +45,7 @@ public class TicketController {
             System.out.println(ticket1.getDescription());
             System.out.println(ticket1.getDescription());
             ticketRepository.saveAndFlush(ticket1);
-            return "updated Successfully";
+            return "updated ticket Successfully";
         } else {
             return "error failed to find id";
         }
@@ -56,7 +56,7 @@ public class TicketController {
         ticketRepository.deleteById(id);
 
 
-        return "deleted successfully";
+        return "deleted ticket successfully";
     }
 
 
