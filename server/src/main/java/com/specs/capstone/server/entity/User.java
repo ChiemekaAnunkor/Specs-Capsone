@@ -1,6 +1,6 @@
-package com.specs.capstone.server.model;
+package com.specs.capstone.server.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -20,7 +20,7 @@ public class User {
     private String role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference
+    @JsonManagedReference
     private Set<Ticket> noteSet = new HashSet<>();
 
     public int getId() {

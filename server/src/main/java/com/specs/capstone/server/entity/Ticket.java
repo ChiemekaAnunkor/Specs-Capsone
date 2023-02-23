@@ -1,6 +1,7 @@
-package com.specs.capstone.server.model;
+package com.specs.capstone.server.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.specs.capstone.server.dto.TicketDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,11 +15,31 @@ public class Ticket {
 
     private  String description;
 
+    private Integer progress;
+
+
     @ManyToOne
     @JsonBackReference
     private User user;
 
     public Ticket(){
+
+    }
+    public Ticket(TicketDto ticketDto){
+        if(ticketDto.getName() !=null){
+            this.name=ticketDto.getName();
+        }
+
+        if(ticketDto.getDescription() !=null){
+            this.description=ticketDto.getDescription();
+        }
+
+        try {
+            this.progress=ticketDto.getProgress();
+        }catch ( Exception e){
+            System.out.println(e);
+        }
+
 
     }
 
@@ -52,5 +73,13 @@ public class Ticket {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

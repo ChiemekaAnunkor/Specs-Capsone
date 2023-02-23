@@ -1,6 +1,7 @@
 package com.specs.capstone.server.controller;
 
-import com.specs.capstone.server.model.User;
+import com.specs.capstone.server.dto.UserDto;
+import com.specs.capstone.server.entity.User;
 import com.specs.capstone.server.repository.UserRepository;
 import com.specs.capstone.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UserController {
         return "new user is Added";
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getall")
     public List<User> list(){
         System.out.println(userService.getAllUsers());
         return userService.getAllUsers();
@@ -56,6 +57,12 @@ public class UserController {
 
 
         return "deleted ticket successfully";
+    }
+
+    @PostMapping("login")
+    public List<String> userLogin(@RequestBody UserDto userDto){
+        return userService.userLogin(userDto);
+
     }
 
 

@@ -1,7 +1,8 @@
 package com.specs.capstone.server.controller;
 
 
-import com.specs.capstone.server.model.Ticket;
+import com.specs.capstone.server.dto.TicketDto;
+import com.specs.capstone.server.entity.Ticket;
 import com.specs.capstone.server.repository.TicketRepository;
 import com.specs.capstone.server.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,18 @@ public class TicketController {
     @Autowired
     private TicketRepository ticketRepository;
 
-    @PostMapping("/add")
-    public String add(@RequestBody Ticket ticket){
-        ticketService.saveTicket(ticket);
+    @PostMapping("/add/{userid}")
+    public String add(@RequestBody TicketDto ticketDto, @PathVariable int userid){
+        ticketService.saveTicket(ticketDto,userid);
         return "new ticket is Added";
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/user/{userid}")
+    public List<TicketDto> getTicketsByUser(@PathVariable int userid){
+        return ticketService.getAllNotesByUserId(userid);
+    }
+
+    @GetMapping("/getall")
     public List<Ticket> list(){
         System.out.println(ticketService.getAllTickets() );
         return ticketService.getAllTickets();
@@ -40,10 +46,7 @@ public class TicketController {
         if(optionalTicket.isPresent()){
 
         Ticket ticket1=optionalTicket.get();
-            System.out.println(ticket.getDescription());
-            ticket1.setDescription(ticket.getDescription());
-            System.out.println(ticket1.getDescription());
-            System.out.println(ticket1.getDescription());
+            ticket1.setProgress(ticket.getProgress());
             ticketRepository.saveAndFlush(ticket1);
             return "updated ticket Successfully";
         } else {
@@ -58,7 +61,6 @@ public class TicketController {
 
         return "deleted ticket successfully";
     }
-
 
 
 }
